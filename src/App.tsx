@@ -1,6 +1,6 @@
 import { ArrowLeft, ArrowRight, RotateCcw, ShieldCheck } from "lucide-react";
 import { useMemo, useState } from "react";
-import { actions, questions, resultLevels, type Action, type RecoveryStyle } from "./data";
+import { actions, questions, resultLevels, type Action, type RecoveryStyle, type ResultLevel } from "./data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -27,20 +27,19 @@ function getScore(answers: Answers) {
   }, 0);
 }
 
-function pickActions(score: number, preferredStyles: RecoveryStyle[]) {
+function pickActions(result: ResultLevel, preferredStyles: RecoveryStyle[]) {
   const styleWeight = preferredStyles.reduce<Record<string, number>>((map, style) => {
     map[style] = (map[style] ?? 0) + 1;
     return map;
   }, {});
 
-  const maxLevel = score >= 21 ? 1 : score >= 14 ? 2 : 3;
-
   return actions
     .map((action) => {
       const preference = action.styles.reduce((sum, style) => sum + (styleWeight[style] ?? 0), 0);
-      const levelFit = action.level <= maxLevel ? 2 : -2;
-      const urgentBoost = score >= 21 && action.styles.includes("connection") ? 3 : 0;
-      return { action, rank: preference + levelFit + urgentBoost };
+      const resultStyleFit = action.styles.reduce((sum, style) => sum + (result.priorityStyles.includes(style) ? 2 : 0), 0);
+      const levelFit = result.actionLevels.includes(action.level) ? 3 : -4;
+      const urgentBoost = result.id === "urgent" && action.styles.includes("connection") ? 3 : 0;
+      return { action, rank: preference + resultStyleFit + levelFit + urgentBoost };
     })
     .sort((a, b) => b.rank - a.rank)
     .slice(0, 3)
@@ -57,7 +56,7 @@ function App() {
   const selected = answers[currentQuestion?.id];
   const score = useMemo(() => getScore(answers), [answers]);
   const result = getResult(score);
-  const recommendedActions = useMemo(() => pickActions(score, getSelectedStyles(answers)), [answers, score]);
+  const recommendedActions = useMemo(() => pickActions(result, getSelectedStyles(answers)), [answers, result]);
 
   const selectOption = (optionId: string) => {
     setAnswers((current) => ({ ...current, [currentQuestion.id]: optionId }));

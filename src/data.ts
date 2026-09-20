@@ -48,6 +48,8 @@ export type ResultLevel = {
   summary: string;
   description: string;
   focus: string;
+  actionLevels: Array<Action["level"]>;
+  priorityStyles: RecoveryStyle[];
 };
 
 export const questions: Question[] = [
@@ -107,6 +109,17 @@ export const questions: Question[] = [
     ],
   },
   {
+    id: "bodySignal",
+    eyebrow: "몸 신호",
+    title: "몸에서는 어떤 신호가 제일 크게 와?",
+    options: [
+      { id: "tight", label: "어깨나 턱에 힘이 들어가", detail: "긴장한 걸 뒤늦게 알아차리는 편이야.", score: 1, styles: ["body", "senses"] },
+      { id: "slow", label: "몸이 느리고 무거워", detail: "움직이기 전까지 시간이 오래 걸려.", score: 2, styles: ["body", "rest"] },
+      { id: "messy", label: "속이 불편하거나 입맛이 없어", detail: "먹는 것부터 막히는 느낌이 있어.", score: 3, styles: ["body", "senses"] },
+      { id: "shut", label: "몸 상태도 잘 모르겠어", detail: "배고픈지 피곤한지도 잘 구분이 안 돼.", score: 4, styles: ["rest", "connection"] },
+    ],
+  },
+  {
     id: "craving",
     eyebrow: "회복 취향",
     title: "지금 이 중에서 제일 덜 부담스러운 건 뭐야?",
@@ -115,6 +128,17 @@ export const questions: Question[] = [
       { id: "warm", label: "따뜻한 물이나 향을 느끼기", detail: "샤워까지는 아니어도 손 씻기, 따뜻한 차, 핸드크림 정도는 가능해.", score: 0, styles: ["senses"] },
       { id: "tiny", label: "눈앞의 물건 3개만 치우기", detail: "방 전체 말고 컵, 휴지, 옷처럼 바로 보이는 것만 옆으로 빼기.", score: 0, styles: ["space"] },
       { id: "none", label: "누가 하나만 정해줬으면 좋겠어", detail: "고르는 것도 피곤해서 가장 쉬운 행동 하나만 받고 싶어.", score: 2, styles: ["rest"] },
+    ],
+  },
+  {
+    id: "duration",
+    eyebrow: "지속 시간",
+    title: "이런 상태가 얼마나 이어졌어?",
+    options: [
+      { id: "today", label: "오늘 갑자기", detail: "어제와 비교하면 오늘 유독 가라앉았어.", score: 0, styles: ["senses", "music"] },
+      { id: "few", label: "며칠째", detail: "짧게 끝날 줄 알았는데 며칠 이어지고 있어.", score: 1, styles: ["space", "body"] },
+      { id: "week", label: "일주일 안팎", detail: "일상 루틴에도 슬슬 영향이 있어.", score: 2, styles: ["rest", "connection"] },
+      { id: "long", label: "2주 이상", detail: "혼자 넘기기 어렵다는 생각이 들어.", score: 3, styles: ["connection", "rest"] },
     ],
   },
   {
@@ -134,42 +158,50 @@ export const resultLevels: ResultLevel[] = [
   {
     id: "cloud",
     min: 0,
-    max: 6,
+    max: 8,
     name: "흐린 날 모드",
-    tone: "아직 마음 안쪽에 움직일 여지가 남아 있어요.",
-    summary: "기분이 조금 가라앉았지만, 작은 자극이나 루틴으로 방향을 바꾸기 좋은 상태예요.",
-    description: "지금 필요한 건 큰 결심보다 기분의 표면을 살짝 흔드는 행동이에요. 오늘의 회복은 빠르게 끝나는 작은 미션으로 충분합니다.",
-    focus: "가벼운 감각 전환",
+    tone: "컨디션은 낮지만 선택지는 아직 남아 있는 상태예요.",
+    summary: "기분이 가라앉았지만 짧은 행동으로 방향을 조금 바꿀 여지가 있어요.",
+    description: "오늘은 큰 회복보다 짧은 전환이 맞아요. 음악, 조명, 환기처럼 시작 비용이 낮은 행동을 우선 추천합니다.",
+    focus: "짧은 전환",
+    actionLevels: [1, 2, 3],
+    priorityStyles: ["music", "senses", "space", "body"],
   },
   {
     id: "battery",
-    min: 7,
-    max: 13,
+    min: 9,
+    max: 16,
     name: "배터리 절약 모드",
-    tone: "의지가 약한 게 아니라 에너지를 아껴야 하는 날에 가까워요.",
-    summary: "무기력감이 꽤 올라와 있어서 많은 일을 해내려 하면 더 지칠 수 있어요.",
-    description: "하루 전체를 고치려 하지 말고, 몸이 '아, 나 돌봄 받고 있구나'라고 알아차릴 수 있는 행동 하나를 고르는 게 좋아요.",
-    focus: "낮은 난이도의 자기돌봄",
+    tone: "할 수 있는 일을 줄여야 하는 상태에 가까워요.",
+    summary: "무기력감이 올라와 있어서 긴 과제보다 10분 안쪽의 행동이 더 잘 맞아요.",
+    description: "목표를 낮게 잡는 편이 낫습니다. 몸, 음식, 알림, 침대처럼 바로 만질 수 있는 것부터 추천합니다.",
+    focus: "낮은 난이도의 실행",
+    actionLevels: [1, 2],
+    priorityStyles: ["body", "senses", "space", "rest"],
   },
   {
     id: "pause",
-    min: 14,
-    max: 20,
+    min: 17,
+    max: 25,
     name: "마음 정지 모드",
-    tone: "지금은 생각보다 몸과 환경을 먼저 다뤄야 할 때예요.",
-    summary: "감정과 생각이 무겁고 기본 루틴도 흔들릴 수 있는 상태예요.",
-    description: "스스로를 설득하려 애쓰면 더 피곤할 수 있어요. 선택지를 줄이고, 따뜻함, 물, 소리, 빛처럼 단순한 자극부터 회복을 시작해보세요.",
-    focus: "선택지를 줄인 회복",
+    tone: "생각으로 해결하려 하면 더 지칠 수 있는 상태예요.",
+    summary: "감정, 몸, 루틴이 같이 느려져서 선택지를 줄이는 방식이 필요해요.",
+    description: "복잡한 행동은 빼고, 물 마시기, 발 내리기, 알림 끄기처럼 판단이 거의 필요 없는 행동을 먼저 추천합니다.",
+    focus: "선택지 줄이기",
+    actionLevels: [1],
+    priorityStyles: ["rest", "senses", "body", "connection"],
   },
   {
     id: "urgent",
-    min: 21,
-    max: 28,
+    min: 26,
+    max: 34,
     name: "긴급 회복 모드",
-    tone: "혼자 더 세게 버티기보다 신호를 보내야 하는 상태에 가까워요.",
-    summary: "마음 에너지가 많이 낮아져 있고, 기본적인 돌봄도 혼자 감당하기 어려울 수 있어요.",
-    description: "오늘의 목표는 기분을 완전히 좋게 만드는 게 아니라 안전하게 지나가는 거예요. 가능한 가장 쉬운 행동 하나와, 부담이 가장 적은 연결 하나를 권해요.",
+    tone: "혼자 버티는 난이도가 높은 상태에 가까워요.",
+    summary: "마음 에너지가 많이 낮고, 기본적인 행동도 혼자 시작하기 어려울 수 있어요.",
+    description: "오늘의 목표는 기분을 완전히 바꾸는 게 아니라 안전하게 지나가는 거예요. 난이도 1 행동과 연결 신호를 우선 추천합니다.",
     focus: "안전과 연결",
+    actionLevels: [1],
+    priorityStyles: ["connection", "rest", "body", "senses"],
   },
 ];
 
