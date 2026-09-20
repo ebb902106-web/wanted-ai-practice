@@ -208,9 +208,11 @@ function ActionCard({ action }: { action: Action }) {
         </div>
       ) : null}
       <div className="action-meta">
-        <span className="icon-chip">
-          <Icon size={20} />
-        </span>
+        {!imageSrc ? (
+          <span className="icon-chip">
+            <Icon size={20} />
+          </span>
+        ) : null}
         <div>
           <Badge>난이도 {action.level}</Badge>
           <span>{action.time}</span>

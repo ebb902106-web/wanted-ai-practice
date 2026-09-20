@@ -376,7 +376,7 @@ a {
 .action-image-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border: 1px solid hsl(214 32% 91%);
   border-radius: 8px;
@@ -393,8 +393,12 @@ a {
 .action-meta {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 12px;
+}
+
+.action-meta:has(.icon-chip) {
+  justify-content: space-between;
 }
 
 .action-meta > div {
