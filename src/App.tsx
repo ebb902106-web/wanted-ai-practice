@@ -90,7 +90,7 @@ function App() {
 
           <Card className="result-card">
             <div className="result-heading">
-              <span className="result-kicker">지금의 우웅 상태</span>
+              <span className="result-kicker">오늘의 우웅 리포트</span>
               <h1>{result.name}</h1>
               <p>{result.tone}</p>
             </div>
@@ -109,8 +109,8 @@ function App() {
 
           <section className="actions-section">
             <div className="section-heading">
-              <span>오늘 바로 해볼 회복 행동</span>
-              <h2>뻔하지 않게, 하지만 너무 어렵지 않게</h2>
+              <span>우웅 탈출 미션</span>
+              <h2>큰 결심 말고, 지금 가능한 한 방</h2>
             </div>
             <div className="action-grid">
               {recommendedActions.map((action) => (
