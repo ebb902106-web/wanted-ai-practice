@@ -110,13 +110,13 @@ export const questions: Question[] = [
   },
   {
     id: "bodySignal",
-    eyebrow: "몸 신호",
-    title: "몸에서는 어떤 신호가 제일 크게 와?",
+    eyebrow: "몸 상태",
+    title: "지금 몸 상태는 어디에 가까워?",
     options: [
-      { id: "tight", label: "어깨나 턱에 힘이 들어가", detail: "긴장한 걸 뒤늦게 알아차리는 편이야.", score: 1, styles: ["body", "senses"] },
-      { id: "slow", label: "몸이 느리고 무거워", detail: "움직이기 전까지 시간이 오래 걸려.", score: 2, styles: ["body", "rest"] },
-      { id: "messy", label: "속이 불편하거나 입맛이 없어", detail: "먹는 것부터 막히는 느낌이 있어.", score: 3, styles: ["body", "senses"] },
-      { id: "shut", label: "몸 상태도 잘 모르겠어", detail: "배고픈지 피곤한지도 잘 구분이 안 돼.", score: 4, styles: ["rest", "connection"] },
+      { id: "tight", label: "긴장돼서 몸이 뻣뻣해", detail: "목, 어깨, 얼굴 쪽이 굳어 있거나 힘이 잘 안 빠져.", score: 1, styles: ["body", "senses"] },
+      { id: "slow", label: "몸이 무겁고 느려", detail: "일어나거나 움직이기까지 시간이 오래 걸려.", score: 2, styles: ["body", "rest"] },
+      { id: "messy", label: "속이 불편하거나 입맛이 없어", detail: "먹는 것부터 막히고 몸 컨디션이 애매해.", score: 3, styles: ["body", "senses"] },
+      { id: "shut", label: "내 몸 상태를 잘 모르겠어", detail: "배고픈지 피곤한지, 뭐가 불편한지도 잘 구분이 안 돼.", score: 4, styles: ["rest", "connection"] },
     ],
   },
   {
