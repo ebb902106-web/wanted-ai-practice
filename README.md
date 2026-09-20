@@ -1,3 +1,10 @@
-# wanted-ai-practice
+# 우울하지말고 우웅하자
 
-Wanted AI practice workspace.
+기분이 우울하거나 무기력할 때, 짧은 질문에 답하면서 지금의 마음 에너지 상태를 확인하고 구체적인 회복 행동을 추천받는 테스트입니다.
+
+## 실행
+
+```bash
+npm install
+npm run dev
+```
