@@ -109,12 +109,12 @@ export const questions: Question[] = [
   {
     id: "craving",
     eyebrow: "회복 취향",
-    title: "지금 조금이라도 덜 싫은 방식은?",
+    title: "지금 이 중에서 제일 덜 부담스러운 건 뭐야?",
     options: [
-      { id: "sound", label: "소리로 바꾸기", detail: "음악, 목소리, 익숙한 소리가 좋아.", score: 0, styles: ["music"] },
-      { id: "warm", label: "감각 깨우기", detail: "물, 향, 촉감처럼 몸으로 느끼는 게 좋아.", score: 0, styles: ["senses"] },
-      { id: "tiny", label: "작은 정리", detail: "눈앞의 한 칸만 바꾸면 숨통이 트일 것 같아.", score: 0, styles: ["space"] },
-      { id: "none", label: "아무것도 고르기 싫음", detail: "선택지도 누가 대신 줄여줬으면 해.", score: 2, styles: ["rest"] },
+      { id: "sound", label: "익숙한 노래 하나 틀어두기", detail: "가사를 따라 부르지 않아도 되고, 그냥 배경에 깔아두는 정도.", score: 0, styles: ["music"] },
+      { id: "warm", label: "따뜻한 물이나 향을 느끼기", detail: "샤워까지는 아니어도 손 씻기, 따뜻한 차, 핸드크림 정도는 가능해.", score: 0, styles: ["senses"] },
+      { id: "tiny", label: "눈앞의 물건 3개만 치우기", detail: "방 전체 말고 컵, 휴지, 옷처럼 바로 보이는 것만 옆으로 빼기.", score: 0, styles: ["space"] },
+      { id: "none", label: "누가 하나만 정해줬으면 좋겠어", detail: "고르는 것도 피곤해서 가장 쉬운 행동 하나만 받고 싶어.", score: 2, styles: ["rest"] },
     ],
   },
   {
