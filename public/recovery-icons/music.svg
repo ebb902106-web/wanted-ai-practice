@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-labelledby="title desc">
+  <title id="title">Music recovery placeholder</title>
+  <desc id="desc">Colorful pixel-style headphones icon placeholder.</desc>
+  <rect width="240" height="180" rx="24" fill="#CFE7F5"/>
+  <g transform="translate(42 26)" stroke="#151C24" stroke-width="10" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M24 82V66C24 30 52 10 78 10s54 20 54 56v16" fill="none"/>
+    <rect x="6" y="78" width="38" height="48" rx="8" fill="#23C7B7"/>
+    <rect x="112" y="78" width="38" height="48" rx="8" fill="#FF6B6B"/>
+    <path d="M92 56v48c0 12-9 20-22 20-12 0-22-7-22-17s10-17 22-17c5 0 10 1 14 4V64l48-12v24z" fill="#FFD166"/>
+    <path d="M92 64l48-12" fill="none"/>
+  </g>
+</svg>

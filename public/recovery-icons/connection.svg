@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-labelledby="title desc">
+  <title id="title">Connection recovery placeholder</title>
+  <desc id="desc">Colorful pixel-style chat bubbles icon placeholder.</desc>
+  <rect width="240" height="180" rx="24" fill="#CFE7F5"/>
+  <g transform="translate(34 30)" stroke="#151C24" stroke-width="10" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M10 18h102c14 0 24 10 24 24v30c0 14-10 24-24 24H58l-30 24V96H10z" fill="#23C7B7"/>
+    <path d="M78 64c-14-12-2-32 14-18 16-14 28 6 14 18L92 78z" fill="#FF6B6B"/>
+    <path d="M78 102h76c12 0 22 9 22 21v10h-48l-24 18v-18H78z" fill="#FFD166"/>
+  </g>
+</svg>

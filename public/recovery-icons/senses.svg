@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-labelledby="title desc">
+  <title id="title">Sensory recovery placeholder</title>
+  <desc id="desc">Colorful pixel-style cup and water drop icon placeholder.</desc>
+  <rect width="240" height="180" rx="24" fill="#CFE7F5"/>
+  <g transform="translate(44 26)" stroke="#151C24" stroke-width="10" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M24 70h82v42c0 18-14 30-34 30H58c-20 0-34-12-34-30z" fill="#FF8A3D"/>
+    <path d="M106 82h18c13 0 22 8 22 20s-9 20-22 20h-18" fill="none"/>
+    <path d="M48 46c0-12 14-12 14-24" fill="none"/>
+    <path d="M76 46c0-12 14-12 14-24" fill="none"/>
+    <path d="M132 28c12 18 24 34 24 50 0 16-11 28-26 28s-26-12-26-28c0-16 16-34 28-50z" fill="#3B82F6"/>
+    <path d="M132 58v22" fill="none"/>
+    <path d="M18 142h130" fill="none"/>
+  </g>
+</svg>

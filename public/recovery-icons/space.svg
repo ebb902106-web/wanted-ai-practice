@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-labelledby="title desc">
+  <title id="title">Space reset placeholder</title>
+  <desc id="desc">Colorful pixel-style tidy bed and box icon placeholder.</desc>
+  <rect width="240" height="180" rx="24" fill="#CFE7F5"/>
+  <g transform="translate(34 32)" stroke="#151C24" stroke-width="10" stroke-linejoin="round" stroke-linecap="round">
+    <rect x="8" y="56" width="160" height="64" rx="10" fill="#52D273"/>
+    <rect x="20" y="28" width="62" height="40" rx="8" fill="#FDE047"/>
+    <path d="M8 120v26M168 120v26" fill="none"/>
+    <rect x="94" y="24" width="54" height="32" rx="6" fill="#FF6B6B"/>
+    <rect x="112" y="86" width="44" height="34" rx="5" fill="#3B82F6"/>
+    <path d="M112 102h44M134 86v34" fill="none"/>
+  </g>
+</svg>

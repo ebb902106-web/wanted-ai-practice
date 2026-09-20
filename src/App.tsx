@@ -198,9 +198,15 @@ function App() {
 
 function ActionCard({ action }: { action: Action }) {
   const Icon = action.icon;
+  const imageSrc = getActionImage(action);
 
   return (
     <Card className="action-card">
+      {imageSrc ? (
+        <div className="action-image-wrap">
+          <img className="action-image" src={imageSrc} alt="" loading="lazy" />
+        </div>
+      ) : null}
       <div className="action-meta">
         <span className="icon-chip">
           <Icon size={20} />
@@ -219,6 +225,17 @@ function ActionCard({ action }: { action: Action }) {
       </ol>
     </Card>
   );
+}
+
+function getActionImage(action: Action) {
+  const imageMap: Partial<Record<RecoveryStyle, string>> = {
+    music: "/recovery-icons/music.svg",
+    senses: "/recovery-icons/senses.svg",
+    space: "/recovery-icons/space.svg",
+    connection: "/recovery-icons/connection.svg",
+  };
+
+  return action.styles.map((style) => imageMap[style]).find(Boolean);
 }
 
 export { App };

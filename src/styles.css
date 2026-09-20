@@ -367,10 +367,27 @@ a {
 }
 
 .action-card {
-  padding: 18px;
+  padding: 14px;
   display: grid;
   gap: 14px;
   box-shadow: none;
+}
+
+.action-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid hsl(214 32% 91%);
+  border-radius: 8px;
+  background: hsl(197 71% 93%);
+}
+
+.action-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
 }
 
 .action-meta {
