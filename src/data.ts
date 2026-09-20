@@ -50,6 +50,7 @@ export type ResultLevel = {
   focus: string;
   actionLevels: Array<Action["level"]>;
   priorityStyles: RecoveryStyle[];
+  avoidList: string[];
 };
 
 export const questions: Question[] = [
@@ -166,6 +167,7 @@ export const resultLevels: ResultLevel[] = [
     focus: "작은 스위치 켜기",
     actionLevels: [1, 2, 3],
     priorityStyles: ["music", "senses", "space", "body"],
+    avoidList: ["기분 분석 길게 하기", "새 콘텐츠 무한 스크롤", "갑자기 방 전체 갈아엎기"],
   },
   {
     id: "battery",
@@ -178,6 +180,7 @@ export const resultLevels: ResultLevel[] = [
     focus: "저전력으로 굴러가기",
     actionLevels: [1, 2],
     priorityStyles: ["body", "senses", "space", "rest"],
+    avoidList: ["할 일 몰아서 처리하기", "답장 한 번에 다 하기", "운동으로 기분 역전 노리기"],
   },
   {
     id: "pause",
@@ -190,6 +193,7 @@ export const resultLevels: ResultLevel[] = [
     focus: "선택지 1개만 남기기",
     actionLevels: [1],
     priorityStyles: ["rest", "senses", "body", "connection"],
+    avoidList: ["큰 결심으로 시작하기", "왜 이러지 계속 파고들기", "선택지 많은 앱 켜기"],
   },
   {
     id: "urgent",
@@ -202,6 +206,7 @@ export const resultLevels: ResultLevel[] = [
     focus: "안전 먼저, 다음은 연결",
     actionLevels: [1],
     priorityStyles: ["connection", "rest", "body", "senses"],
+    avoidList: ["혼자 괜찮은 척 버티기", "위험한 생각을 혼자 붙잡고 있기", "도움 요청을 내일로 미루기"],
   },
 ];
 

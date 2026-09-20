@@ -8,6 +8,13 @@ import { Progress } from "@/components/ui/progress";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 type Answers = Record<string, string>;
+type SelectedAnswer = {
+  questionId: string;
+  questionTitle: string;
+  label: string;
+  score: number;
+  styles: RecoveryStyle[];
+};
 
 function getResult(score: number) {
   return resultLevels.find((level) => score >= level.min && score <= level.max) ?? resultLevels[0];
@@ -17,6 +24,22 @@ function getSelectedStyles(answers: Answers): RecoveryStyle[] {
   return questions.flatMap((question) => {
     const selected = question.options.find((option) => option.id === answers[question.id]);
     return selected?.styles ?? [];
+  });
+}
+
+function getSelectedAnswers(answers: Answers): SelectedAnswer[] {
+  return questions.flatMap((question) => {
+    const selected = question.options.find((option) => option.id === answers[question.id]);
+    if (!selected) return [];
+    return [
+      {
+        questionId: question.id,
+        questionTitle: question.title,
+        label: selected.label,
+        score: selected.score,
+        styles: selected.styles ?? [],
+      },
+    ];
   });
 }
 
@@ -46,6 +69,46 @@ function pickActions(result: ResultLevel, preferredStyles: RecoveryStyle[]) {
     .map(({ action }) => action);
 }
 
+function getInsightTags(selectedAnswers: SelectedAnswer[]) {
+  const styleLabels: Record<RecoveryStyle, string> = {
+    music: "소리로 전환",
+    senses: "감각 리셋",
+    body: "몸부터 켜기",
+    emotion: "생각 과부하",
+    space: "주변 정리 필요",
+    connection: "연결 신호 필요",
+    rest: "선택 피로",
+  };
+
+  const selectedTag = selectedAnswers
+    .filter((answer) => answer.score >= 2)
+    .slice(0, 3)
+    .map((answer) => answer.label);
+
+  const styleTag = selectedAnswers
+    .flatMap((answer) => answer.styles)
+    .map((style) => styleLabels[style])
+    .filter((label, index, array) => array.indexOf(label) === index)
+    .slice(0, 2);
+
+  return [...selectedTag, ...styleTag].slice(0, 5);
+}
+
+function getRecommendationReason(action: Action, result: ResultLevel, preferredStyles: RecoveryStyle[]) {
+  const reasonByStyle: Record<RecoveryStyle, string> = {
+    music: "머릿속이 시끄러울 때는 말보다 소리가 빠를 때가 있어요.",
+    senses: "지금은 생각보다 물, 온도, 촉감 같은 감각 스위치가 잘 먹힐 수 있어요.",
+    body: "몸 배터리가 낮아서 머리보다 몸을 먼저 켜는 쪽으로 골랐어요.",
+    emotion: "감정을 길게 파기보다 짧게 꺼내놓는 행동이 덜 부담스러워요.",
+    space: "주변이 조금만 정리돼도 우웅 소리가 덜 커질 수 있어요.",
+    connection: "혼자 풀기 빡센 우웅이라, 대화보다 신호 보내기부터 잡았어요.",
+    rest: "선택지가 많을수록 더 지치는 상태라 쉬운 행동으로 줄였어요.",
+  };
+  const matchedStyle = action.styles.find((style) => preferredStyles.includes(style)) ?? action.styles.find((style) => result.priorityStyles.includes(style)) ?? action.styles[0];
+
+  return reasonByStyle[matchedStyle];
+}
+
 function App() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
@@ -56,7 +119,12 @@ function App() {
   const selected = answers[currentQuestion?.id];
   const score = useMemo(() => getScore(answers), [answers]);
   const result = getResult(score);
-  const recommendedActions = useMemo(() => pickActions(result, getSelectedStyles(answers)), [answers, result]);
+  const selectedAnswers = useMemo(() => getSelectedAnswers(answers), [answers]);
+  const selectedStyles = useMemo(() => getSelectedStyles(answers), [answers]);
+  const insightTags = useMemo(() => getInsightTags(selectedAnswers), [selectedAnswers]);
+  const recommendedActions = useMemo(() => pickActions(result, selectedStyles), [result, selectedStyles]);
+  const primaryAction = recommendedActions[0];
+  const secondaryActions = recommendedActions.slice(1);
 
   const selectOption = (optionId: string) => {
     setAnswers((current) => ({ ...current, [currentQuestion.id]: optionId }));
@@ -96,7 +164,7 @@ function App() {
             </div>
             <div className="result-grid">
               <div>
-                <strong>상태 해석</strong>
+                <strong>오늘의 우웅 요약</strong>
                 <p>{result.summary}</p>
               </div>
               <div>
@@ -107,14 +175,46 @@ function App() {
             <p className="result-description">{result.description}</p>
           </Card>
 
+          <section className="report-grid">
+            <Card className="report-card">
+              <span className="report-label">네 답변에서 잡힌 포인트</span>
+              <div className="insight-tags">
+                {insightTags.map((tag) => (
+                  <Badge key={tag} variant="secondary">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+              <p>이 조합이면 “힘내자!”보다 “일단 하나만 줄이자”가 더 잘 맞아요. 갓생 말고 생존 루틴부터 갑니다.</p>
+            </Card>
+            <Card className="report-card avoid-card">
+              <span className="report-label">오늘 하지 말 것</span>
+              <ul>
+                {result.avoidList.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </Card>
+          </section>
+
           <section className="actions-section">
             <div className="section-heading">
               <span>우웅 탈출 미션</span>
               <h2>큰 결심 말고, 지금 가능한 한 방</h2>
             </div>
+            {primaryAction ? (
+              <div className="primary-action-block">
+                <div className="primary-action-copy">
+                  <span>1순위 미션</span>
+                  <strong>{primaryAction.title}</strong>
+                  <p>이거 하나만 해도 오늘은 리포트 값 합니다. 완벽하게 말고 시작만 하면 됨.</p>
+                </div>
+                <ActionCard action={primaryAction} reason={getRecommendationReason(primaryAction, result, selectedStyles)} featured />
+              </div>
+            ) : null}
             <div className="action-grid">
-              {recommendedActions.map((action) => (
-                <ActionCard key={action.title} action={action} />
+              {secondaryActions.map((action) => (
+                <ActionCard key={action.title} action={action} reason={getRecommendationReason(action, result, selectedStyles)} />
               ))}
             </div>
           </section>
@@ -196,12 +296,12 @@ function App() {
   );
 }
 
-function ActionCard({ action }: { action: Action }) {
+function ActionCard({ action, reason, featured = false }: { action: Action; reason?: string; featured?: boolean }) {
   const Icon = action.icon;
   const imageSrc = getActionImage(action);
 
   return (
-    <Card className="action-card">
+    <Card className={`action-card ${featured ? "action-card-featured" : ""}`}>
       {imageSrc ? (
         <div className="action-image-wrap">
           <img className="action-image" src={imageSrc} alt="" loading="lazy" />
@@ -219,6 +319,7 @@ function ActionCard({ action }: { action: Action }) {
         </div>
       </div>
       <h3>{action.title}</h3>
+      {reason ? <p className="action-reason">왜 이거냐면: {reason}</p> : null}
       <p>{action.body}</p>
       <ol>
         {action.steps.map((step) => (
