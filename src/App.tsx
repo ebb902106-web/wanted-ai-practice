@@ -1,7 +1,11 @@
 import { ArrowLeft, ArrowRight, RotateCcw, ShieldCheck } from "lucide-react";
 import { useMemo, useState } from "react";
 import { actions, questions, resultLevels, type Action, type RecoveryStyle } from "./data";
-import { Badge, Button, Card, ChoiceCard, Progress, RadioGroup } from "./components/ui";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 type Answers = Record<string, string>;
 
@@ -153,7 +157,7 @@ function App() {
             <span>
               {step + 1} / {questions.length}
             </span>
-            <Progress value={progress} />
+            <Progress value={progress} className="quiz-progress-track" />
           </div>
 
           <div className="question-heading">
@@ -161,17 +165,19 @@ function App() {
             <h2>{currentQuestion.title}</h2>
           </div>
 
-          <RadioGroup>
+          <RadioGroup value={selected} onValueChange={selectOption}>
             {currentQuestion.options.map((option) => (
-              <ChoiceCard
+              <label
                 key={option.id}
-                id={`${currentQuestion.id}-${option.id}`}
-                name={currentQuestion.id}
-                checked={selected === option.id}
-                label={option.label}
-                detail={option.detail}
-                onChange={() => selectOption(option.id)}
-              />
+                className={`choice-card ${selected === option.id ? "choice-card-selected" : ""}`}
+                htmlFor={`${currentQuestion.id}-${option.id}`}
+              >
+                <RadioGroupItem id={`${currentQuestion.id}-${option.id}`} value={option.id} />
+                <span>
+                  <strong>{option.label}</strong>
+                  <small>{option.detail}</small>
+                </span>
+              </label>
             ))}
           </RadioGroup>
 
